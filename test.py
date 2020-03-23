@@ -5,15 +5,13 @@ Created on Mon Mar 23 15:56:08 2020
 @author: shirai
 """
 
+
 import tkinter as tk
 import tkinter.messagebox as tkm
 
 target = 'ok'
 index = -1
 the_line = ''
-
-with open('test.txt','r') as f:
-    lines = f.readlines()
 
 root = tk.Tk()
 
@@ -36,13 +34,15 @@ label.pack()
 
 list_box = tk.Listbox()
 
+with open('test.txt','r') as f:
+    lines = f.readlines()
+    
 for i,line in enumerate(lines):
     list_box.insert(i,f'{i} {line}')
     if target in line:
         index = i
         the_line = line
         
-#list_box.pack()
 list_box.pack(expand = True, fill = 'x', padx = 20)
 
 # Input field
@@ -68,10 +68,9 @@ def replace_text(event):
         lines[index] = text_2 + '\n'
         with open('test.txt','w') as f:
             f.writelines(lines)
-
-
     else:
         tkm.showerror('エラー', '対象のテキストは存在しません') 
+        
 # Button
 button = tk.Button(text = 'BUTTON', width = 20)
 button.bind('<Button-1>', replace_text)
