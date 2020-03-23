@@ -30,7 +30,7 @@ entry_1.insert(tk.END, 'Input something here')
 entry_2 = tk.Entry(width = 20) # 50%)
 entry_2.insert(tk.END, s)
 #entry_2.pack(side = 'right')
-entry_2.grid(padx=20,pady=20)
+entry_2.grid(padx=20,pady=30)
 # Get text
 def get_text(event):
     text = entry_1.get()
