@@ -6,43 +6,71 @@ Created on Mon Mar 23 15:56:08 2020
 """
 
 import tkinter as tk
+import tkinter.messagebox as tkm
+
+target = 'bbb'
 
 with open('test.txt','r') as f:
-    s = f.read()
-
+    lines = f.readlines()
 
 root = tk.Tk()
 
 # Settings
 root.title('タイトル')
-root.geometry('600x200+400+500')
+root.geometry('600x300+400+500')
 
 # Label
-label = tk.Label(text = 'Label')
-#label.pack()
+label = tk.Label(text = '全文表示')
+label.pack()
+
+list_box = tk.Listbox()
+
+for i,line in enumerate(lines):
+    list_box.insert(i,f'{i} {line}')
+    if target in line:
+        index = i
+        the_line = line
+        
+    else:
+        index = -1
+        the_line = ''
+        
+#list_box.pack()
+list_box.pack(expand = True, fill = 'x')
 
 # Input field
-entry_1 = tk.Entry(width = 20) # 50%
-entry_1.insert(tk.END, 'Input something here')
-#entry_1.pack(side = 'left')
+entry_1 = tk.Entry(width = 50) # 50%
+entry_1.insert(tk.END, f'{index} {the_line}')
+entry_1.pack(side = 'left')
 
 # Input field
-entry_2 = tk.Entry(width = 20) # 50%)
-entry_2.insert(tk.END, s)
-#entry_2.pack(side = 'right')
-entry_2.grid(padx=20,pady=30)
-# Get text
-def get_text(event):
-    text = entry_1.get()
-    print(text)
+entry_2 = tk.Entry(width = 50) # 50%
+entry_2.insert(tk.END, '')
+entry_2.pack(side = 'right')
+#entry_2.pack(padx=200,pady=30)
+
+# Replace line
+def replace_text(event):
+    text_1 = entry_1.get()
+    text_2 = entry_2.get()
+    print(text_1)
+    print(text_2)
+    
+    # Replace line
+    if index >= 0:
+        lines[index] = text_2 + '\n'
+        with open('test.txt','w') as f:
+            f.writelines(lines)
 
 
+    else:
+        tkm.showerror('エラー', '対象のテキストは存在しません') 
 # Button
 button = tk.Button(text = 'BUTTON', width = 20)
-button.bind('<Button-1>', get_text)
-#button.pack()
+button.bind('<Button-1>', replace_text)
+button.pack(pady = 10, ipady = 10)
 
 # Focus
-entry_1.focus_set()
+entry_2.focus_force()
 
 root.mainloop()
