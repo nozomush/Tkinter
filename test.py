@@ -8,7 +8,9 @@ Created on Mon Mar 23 15:56:08 2020
 import tkinter as tk
 import tkinter.messagebox as tkm
 
-target = 'bbb'
+target = 'ok'
+index = -1
+the_line = ''
 
 with open('test.txt','r') as f:
     lines = f.readlines()
@@ -16,8 +18,17 @@ with open('test.txt','r') as f:
 root = tk.Tk()
 
 # Settings
-root.title('タイトル')
-root.geometry('600x300+400+500')
+root.title('REPLACE')
+root.geometry('600x400+400+500')
+
+# Label
+label_0 = tk.Label(text = 'TARGET')
+label_0.pack()
+
+# Input field
+entry_0 = tk.Entry(width = 50) # 50%
+entry_0.insert(tk.END, target)
+entry_0.pack()
 
 # Label
 label = tk.Label(text = '全文表示')
@@ -31,22 +42,18 @@ for i,line in enumerate(lines):
         index = i
         the_line = line
         
-    else:
-        index = -1
-        the_line = ''
-        
 #list_box.pack()
-list_box.pack(expand = True, fill = 'x')
+list_box.pack(expand = True, fill = 'x', padx = 20)
 
 # Input field
 entry_1 = tk.Entry(width = 50) # 50%
 entry_1.insert(tk.END, f'{index} {the_line}')
-entry_1.pack(side = 'left')
+entry_1.pack()
 
 # Input field
 entry_2 = tk.Entry(width = 50) # 50%
 entry_2.insert(tk.END, '')
-entry_2.pack(side = 'right')
+entry_2.pack()
 #entry_2.pack(padx=200,pady=30)
 
 # Replace line
@@ -68,7 +75,7 @@ def replace_text(event):
 # Button
 button = tk.Button(text = 'BUTTON', width = 20)
 button.bind('<Button-1>', replace_text)
-button.pack(pady = 10, ipady = 10)
+button.pack(expand = True, fill = 'y', pady = 20)
 
 # Focus
 entry_2.focus_force()
